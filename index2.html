@@ -3,8 +3,6 @@
   <head>
     <meta charset="UTF-8" />
 
-
-
     <title>Dash</title>
 <link rel="icon" href="icon.png">
     <link
@@ -277,6 +275,18 @@
             height: 36,
           },
 
+          CURSO_C: {
+            src: "images/curso_c.png",
+            width: 60,
+            height: 60,
+          },
+
+          CURSO_CPP: {
+            src: "images/curso_cpp.png",
+            width: 60,
+            height: 60,
+          },
+
           FINISH: {
             src: "images/finish.png",
             width: 339,
@@ -411,6 +421,19 @@
       }
 
       class Car {
+        constructor(pos, type, lane, curso) {
+          this.pos = pos;
+          this.type = type;
+          this.lane = lane;
+          this.isCursoC = curso;
+
+          var element = document.createElement("div");
+          road.appendChild(element);
+          this.element = element;
+        }
+      }
+      
+      /*class Curso {
         constructor(pos, type, lane) {
           this.pos = pos;
           this.type = type;
@@ -420,7 +443,7 @@
           road.appendChild(element);
           this.element = element;
         }
-      }
+      }*/
 
       class Audio {
         constructor() {
@@ -536,6 +559,13 @@
         countDown;
       let lines = [];
       let cars = [];
+
+      //Cursos
+      let curso_c_added = false;
+      let curso_cpp_added = false;
+      /*let curso_c;
+      let curso_cpp;
+      let cursos = [curso_c, curso_cpp];*/
 
       // ------------------------------------------------------------
       // map
@@ -740,6 +770,14 @@
           (cloudOffset -= lines[startPos].curve * step * speed * 0.13) | 0
         }px 0`;
 
+        // Agrega el objeto Car con la imagen de curso_c en LANE.A cuando gameTime sea 100 y solo una vez
+        /*if (time < 110 && time > 106 && !curso_c_added) {
+          const curso_car = new Car(0, ASSETS.IMAGE.CURSO_C, LANE.C, true);
+          cars.push(curso_car);
+          curso_c_added = true;
+          if (inGame) audio.play("beep");
+        }*/
+
         // other cars
         for (let car of cars) {
           car.pos = (car.pos + enemy_speed * step) % N;
@@ -757,11 +795,18 @@
             (car.pos | 0) === startPos &&
             isCollide(playerX * offsetRatio + LANE.B, 0.5, car.lane, 0.5)
           ) {
+          if (car.isCursoC) {
+            // Redirige a la URL del Curso C si el objeto Car es un curso C
+            //window.location.href = "https://domingo1987.github.io/Curso-C";
+          } else {
+            // La lógica de colisión original para objetos Car que no son cursos
             speed = Math.min(hitSpeed, speed);
             if (inGame) audio.play("honk");
           }
         }
 
+        /*window.location.href = "https://domingo1987.github.io/Curso-CPP";*/
+  
         // draw road
         let maxy = height;
         let camH = H + lines[startPos].y;
@@ -797,7 +842,6 @@
               l.drawSprite(level, car.element, car.type, car.lane);
 
           // update road
-
           if (l.Y >= maxy) continue;
           maxy = l.Y;
 
@@ -927,13 +971,14 @@
           audio.load(ASSETS.AUDIO[key], key, (_) => 0)
         );
 
-        cars.push(new Car(0, ASSETS.IMAGE.CAR, LANE.C));
-        cars.push(new Car(10, ASSETS.IMAGE.CAR, LANE.B));
-        cars.push(new Car(20, ASSETS.IMAGE.CAR, LANE.C));
-        cars.push(new Car(35, ASSETS.IMAGE.CAR, LANE.C));
-        cars.push(new Car(50, ASSETS.IMAGE.CAR, LANE.A));
-        cars.push(new Car(60, ASSETS.IMAGE.CAR, LANE.B));
-        cars.push(new Car(70, ASSETS.IMAGE.CAR, LANE.A));
+        cars.push(new Car(0, ASSETS.IMAGE.CAR, LANE.C, false));
+        //cars.push(new Car(10, ASSETS.IMAGE.CAR, LANE.B, false));
+        cars.push(new Car(20, ASSETS.IMAGE.CAR, LANE.C, false));
+        cars.push(new Car(35, ASSETS.IMAGE.CAR, LANE.C, false));
+        //cars.push(new Car(50, ASSETS.IMAGE.CAR, LANE.A, false));
+        //cars.push(new Car(60, ASSETS.IMAGE.CAR, LANE.B, false));
+        //cars.push(new Car(70, ASSETS.IMAGE.CAR, LANE.A, false));
+
 
         for (let i = 0; i < N; i++) {
           var line = new Line();
