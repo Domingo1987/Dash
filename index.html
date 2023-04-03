@@ -758,9 +758,14 @@
             (car.pos | 0) === startPos &&
             isCollide(playerX * offsetRatio + LANE.B, 0.5, car.lane, 0.5)
           ) {
-            speed = Math.min(hitSpeed, speed);
-            if (inGame) audio.play("honk");
-          }
+            if (car.url) {
+                // Redirige a la URL del Curso si la propiedad url del objeto Car no está vacía
+                window.location.href = car.url;
+            } else {
+                // La lógica de colisión original para objetos Car que no son cursos
+                speed = Math.min(hitSpeed, speed);
+                if (inGame) audio.play("honk");
+            }
         }
 
         // draw road
