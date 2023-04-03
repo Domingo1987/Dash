@@ -277,6 +277,18 @@
             height: 36,
           },
 
+          CURSO_C: {
+            src: "images/curso_c.png",
+            width: 60,
+            height: 60,
+          },
+
+          CURSO_CPP: {
+            src: "images/curso_cpp.png",
+            width: 60,
+            height: 60,
+          },
+
           FINISH: {
             src: "images/finish.png",
             width: 339,
@@ -421,6 +433,18 @@
           this.element = element;
         }
       }
+      
+      class Curso {
+        constructor(pos, type, lane) {
+          this.pos = pos;
+          this.type = type;
+          this.lane = lane;
+
+          var element = document.createElement("div");
+          road.appendChild(element);
+          this.element = element;
+        }
+      }
 
       class Audio {
         constructor() {
@@ -536,6 +560,11 @@
         countDown;
       let lines = [];
       let cars = [];
+
+      //Cursos
+      let curso_c;
+      let curso_cpp;
+      let cursos = [curso_c, curso_cpp];
 
       // ------------------------------------------------------------
       // map
@@ -762,6 +791,36 @@
           }
         }
 
+        // Otros cursos
+        for (let curso of cursos) {
+            curso.pos = (curso.pos + enemy_speed * step) % N;
+
+            // respawn
+            if ((curso.pos | 0) === endPos) {
+                // Cambiar esta condición para hacer respawn menos veces que car
+                if (speed < 15) {
+                    curso.pos = startPos;
+                } else {
+                    curso.pos = endPos - 2;
+                }
+                curso.lane = randomProperty(LANE);
+            }
+
+            // collision
+            const offsetRatio = 5;
+            if (
+                (curso.pos | 0) === startPos &&
+                isCollide(playerX * offsetRatio + LANE.B, 0.5, curso.lane, 0.5)
+            ) {
+                // Verificar cuál curso colisionó y redirigir a la URL correspondiente
+                if (curso === curso_c) {
+                    window.location.href = "https://domingo1987.github.io/Curso-C";
+                } else if (curso === curso_cpp) {
+                    window.location.href = "https://domingo1987.github.io/Curso-CPP";
+                }
+            }
+        }
+
         // draw road
         let maxy = height;
         let camH = H + lines[startPos].y;
@@ -795,6 +854,13 @@
           for (let car of cars)
             if ((car.pos | 0) === n % N)
               l.drawSprite(level, car.element, car.type, car.lane);
+
+          // Dibujar cursos
+          for (let curso of cursos) {
+              if ((curso.pos | 0) === n % N) {
+                  l.drawSprite(level, curso.element, curso.type, curso.lane);
+              }
+          }
 
           // update road
 
