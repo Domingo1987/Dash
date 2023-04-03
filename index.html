@@ -277,6 +277,24 @@
             height: 36,
           },
 
+          CURSO_C: {
+            src: "images/curso_c.png",
+            width: 60,
+            height: 60,
+          },
+
+          CURSO_CPP: {
+            src: "images/curso_cpp.png",
+            width: 60,
+            height: 60,
+          },
+
+          CURSO_JAVA: {
+            src: "images/curso_java.png",
+            width: 60,
+            height: 60,
+          },
+
           FINISH: {
             src: "images/finish.png",
             width: 339,
@@ -538,6 +556,11 @@
       let lines = [];
       let cars = [];
 
+      //Cursos
+      let curso_c_added = false;
+      let curso_cpp_added = false;
+      let curso_java_added = false;
+
       // ------------------------------------------------------------
       // map
       // ------------------------------------------------------------
@@ -741,6 +764,22 @@
           (cloudOffset -= lines[startPos].curve * step * speed * 0.13) | 0
         }px 0`;
 
+        // cursos
+        if ((countDown | 0) == 120 && !curso_c_added) {
+          cars.push(new Car(50, ASSETS.IMAGE.CURSO_C, LANE.A, "https://domingo1987.github.io/Curso-C/"));
+          curso_c_added = true;
+        }
+
+        if ((countDown | 0) == 110 && !curso_cpp_added) {
+          cars.push(new Car(50, ASSETS.IMAGE.CURSO_CPP, LANE.B, "https://domingo1987.github.io/Curso-CPP/"));
+          curso_cpp_added = true;
+        }
+
+        if ((countDown | 0) == 100 && !curso_java_added) {
+          cars.push(new Car(50, ASSETS.IMAGE.CURSO_JAVA, LANE.C, "https://domingo1987.github.io/Curso-JAVA/"));
+          curso_java_added = true;
+        }
+
         // other cars
         for (let car of cars) {
           car.pos = (car.pos + enemy_speed * step) % N;
@@ -749,7 +788,9 @@
           if ((car.pos | 0) === endPos) {
             if (speed < 30) car.pos = startPos;
             else car.pos = endPos - 2;
-            //car.lane = randomProperty(LANE);
+            if (!car.url) {
+              car.lane = randomProperty(LANE);
+            } 
           }
 
           // collision
@@ -759,13 +800,14 @@
             isCollide(playerX * offsetRatio + LANE.B, 0.5, car.lane, 0.5)
           ) {
             if (car.url) {
-                // Redirige a la URL del Curso si la propiedad url del objeto Car no está vacía
-                window.location.href = car.url;
+              // Redirige a la URL del Curso si la propiedad url del objeto Car no está vacía
+              window.location.href = car.url;
             } else {
-                // La lógica de colisión original para objetos Car que no son cursos
-                speed = Math.min(hitSpeed, speed);
-                if (inGame) audio.play("honk");
+              // La lógica de colisión original para objetos Car que no son cursos
+              speed = Math.min(hitSpeed, speed);
+              if (inGame) audio.play("honk");
             }
+          }
         }
 
         // draw road
@@ -935,11 +977,11 @@
 
         cars.push(new Car(0, ASSETS.IMAGE.CAR, LANE.C));
         //cars.push(new Car(10, ASSETS.IMAGE.CAR, LANE.B));
-        cars.push(new Car(20, ASSETS.IMAGE.CAR, LANE.C));
+        //cars.push(new Car(20, ASSETS.IMAGE.CAR, LANE.C));
         cars.push(new Car(35, ASSETS.IMAGE.CAR, LANE.C));
-        //cars.push(new Car(50, ASSETS.IMAGE.CAR, LANE.A));
-        //cars.push(new Car(60, ASSETS.IMAGE.CAR, LANE.B));
-       // cars.push(new Car(70, ASSETS.IMAGE.CAR, LANE.A));
+        cars.push(new Car(50, ASSETS.IMAGE.CAR, LANE.A));
+        cars.push(new Car(60, ASSETS.IMAGE.CAR, LANE.B));
+        cars.push(new Car(70, ASSETS.IMAGE.CAR, LANE.A));
 
         for (let i = 0; i < N; i++) {
           var line = new Line();
