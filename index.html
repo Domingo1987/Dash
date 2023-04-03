@@ -993,13 +993,17 @@
           audio.load(ASSETS.AUDIO[key], key, (_) => 0)
         );
 
-        cars.push(new Car(0, ASSETS.IMAGE.CAR, LANE.C));
-        cars.push(new Car(10, ASSETS.IMAGE.CAR, LANE.B));
-        cars.push(new Car(20, ASSETS.IMAGE.CAR, LANE.C));
-        cars.push(new Car(35, ASSETS.IMAGE.CAR, LANE.C));
+        //cars.push(new Car(0, ASSETS.IMAGE.CAR, LANE.C));
+        //cars.push(new Car(10, ASSETS.IMAGE.CAR, LANE.B));
+        //cars.push(new Car(20, ASSETS.IMAGE.CAR, LANE.C));
+        //cars.push(new Car(35, ASSETS.IMAGE.CAR, LANE.C));
         cars.push(new Car(50, ASSETS.IMAGE.CAR, LANE.A));
-        cars.push(new Car(60, ASSETS.IMAGE.CAR, LANE.B));
+        //cars.push(new Car(60, ASSETS.IMAGE.CAR, LANE.B));
         cars.push(new Car(70, ASSETS.IMAGE.CAR, LANE.A));
+
+        cursos.push(new Curso(0, ASSETS.IMAGE.CURSO_C, LANE.C));
+        cursos.push(new Curso(50, ASSETS.IMAGE.CURSO_CPP, LANE.C));
+
 
         for (let i = 0; i < N; i++) {
           var line = new Line();
