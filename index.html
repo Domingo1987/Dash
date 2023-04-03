@@ -795,6 +795,7 @@
         for (let curso of cursos) {
             curso.pos = (curso.pos + enemy_speed * step) % N;
 
+            /*
             // respawn
             if ((curso.pos | 0) === endPos) {
                 // Cambiar esta condición para hacer respawn menos veces que car
@@ -804,7 +805,7 @@
                     curso.pos = endPos - 2;
                 }
                 curso.lane = randomProperty(LANE);
-            }
+            }*/
 
             // collision
             const offsetRatio = 5;
@@ -1000,8 +1001,8 @@
         cars.push(new Car(60, ASSETS.IMAGE.CAR, LANE.B));
         cars.push(new Car(70, ASSETS.IMAGE.CAR, LANE.A));
 
-        //cursos.push(new Curso(0, ASSETS.IMAGE.CURSO_C, LANE.C));
-        //cursos.push(new Curso(50, ASSETS.IMAGE.CURSO_CPP, LANE.C));
+        cursos.push(new Curso(30, ASSETS.IMAGE.CURSO_C, LANE.C));
+        cursos.push(new Curso(65, ASSETS.IMAGE.CURSO_CPP, LANE.C));
 
 
         for (let i = 0; i < N; i++) {
