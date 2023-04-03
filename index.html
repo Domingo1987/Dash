@@ -773,17 +773,17 @@
         }px 0`;
 
         // Agrega el objeto Car con la imagen de curso_c en LANE.A cuando gameTime sea 100 y solo una vez
-        if (time < 110 && time > 106 && !curso_c_added) {
+        /*if (time < 110 && time > 106 && !curso_c_added) {
           const curso_car = new Car(0, ASSETS.IMAGE.CURSO_C, LANE.C, true);
           cars.push(curso_car);
           curso_c_added = true;
           if (inGame) audio.play("beep");
-        }
+        }*/
 
         // other cars
         for (let car of cars) {
           car.pos = (car.pos + enemy_speed * step) % N;
-          
+
           // respawn
           if ((car.pos | 0) === endPos) {
             if (speed < 30) car.pos = startPos;
@@ -799,7 +799,7 @@
           ) {
           if (car.isCursoC) {
             // Redirige a la URL del Curso C si el objeto Car es un curso C
-            window.location.href = "https://domingo1987.github.io/Curso-C";
+            //window.location.href = "https://domingo1987.github.io/Curso-C";
           } else {
             // La lógica de colisión original para objetos Car que no son cursos
             speed = Math.min(hitSpeed, speed);
@@ -842,13 +842,6 @@
           for (let car of cars)
             if ((car.pos | 0) === n % N)
               l.drawSprite(level, car.element, car.type, car.lane);
-
-          // Dibujar cursos
-          /*for (let curso of cursos) {
-              if ((curso.pos | 0) === n % N) {
-                  l.drawSprite(level, curso.element, curso.type, curso.lane);
-              }
-          }*/
 
           // update road
           if (l.Y >= maxy) continue;
@@ -980,13 +973,13 @@
           audio.load(ASSETS.AUDIO[key], key, (_) => 0)
         );
 
-        //cars.push(new Car(0, ASSETS.IMAGE.CAR, LANE.C, false));
+        cars.push(new Car(0, ASSETS.IMAGE.CAR, LANE.C, false));
         //cars.push(new Car(10, ASSETS.IMAGE.CAR, LANE.B, false));
-        //cars.push(new Car(20, ASSETS.IMAGE.CAR, LANE.C, false));
-        //cars.push(new Car(35, ASSETS.IMAGE.CAR, LANE.C, false));
-        cars.push(new Car(50, ASSETS.IMAGE.CAR, LANE.A, false));
+        cars.push(new Car(20, ASSETS.IMAGE.CAR, LANE.C, false));
+        cars.push(new Car(35, ASSETS.IMAGE.CAR, LANE.C, false));
+        //cars.push(new Car(50, ASSETS.IMAGE.CAR, LANE.A, false));
         //cars.push(new Car(60, ASSETS.IMAGE.CAR, LANE.B, false));
-        cars.push(new Car(70, ASSETS.IMAGE.CAR, LANE.A, false));
+        //cars.push(new Car(70, ASSETS.IMAGE.CAR, LANE.A, false));
 
 
         for (let i = 0; i < N; i++) {
